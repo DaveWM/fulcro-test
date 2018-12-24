@@ -1,4 +1,4 @@
-{:http-kit      {:port :env/PORT}
+{:http-kit      {:port :env.edn/PORT}
 
  ;; Legal Origins for API request.
  :legal-origins #{"product.domain" "localhost" :env/HOST}
