@@ -3,8 +3,14 @@
     [fulcro.client.dom :as dom :refer [div]]
     [fulcro.client.primitives :as prim :refer [defsc]]
     [fulcro.client.mutations :as fm :refer [defmutation]]
-    [fulcro-test.ui.components :as comp]
-    [fulcro-test.ui.counter :as counter]))
+    [fulcro-test.ui.counter :as counter]
+    ["@material-ui/core/Button" :default Button]
+    ["@material-ui/core/Grid" :default Grid]
+    ["@material-ui/core/CssBaseline" :default CssBaseline]
+    ["@material-ui/core/AppBar" :default AppBar]
+    ["@material-ui/core/Toolbar" :default Toolbar]
+    ["@material-ui/core/CircularProgress" :default CircularProgress]
+    [fulcro-test.ui.utils :as u]))
 
 (defmutation increment [{:keys [id]}]
   (action [{:keys [state] :as env}]
@@ -33,18 +39,27 @@
                                                (into [])))))))
   (remote [_] true))
 
+
 (defsc Root [this {:keys [root/message counters ui/loading-data] :as props}]
   {:query [:root/message {:counters (prim/get-query counter/Counter)} :ui/loading-data]}
-  (if loading-data
-    (dom/p "Loading...")
-    (div :.ui.segment
-         (div :.ui.top.attached.segment
-              (div :.content
-                   "Welcome to Fulcro!"))
-         (div :.ui.attached.segment
-              (div :.content
-                   (comp/ui-placeholder {:w 50 :h 50})
-                   (div message)
-                   (map counter/ui-counter counters)
-                   (dom/button #js {:onClick #(prim/transact! this `[(add-counter {:tempid ~(prim/tempid)})])}
-                               "Add Counter"))))))
+  (dom/div
+    {}
+    (u/js-comp CssBaseline {})
+    (if loading-data
+      (dom/div {:bp "grid 4 vertical-center margin"}
+               (u/js-comp CircularProgress {:bp "offset-2 text-center flex"
+                                            :style {:width "auto"
+                                                    :height "auto"}}))
+      (dom/div
+        {}
+        (u/js-comp
+          AppBar {:position "relative"}
+          (u/js-comp Toolbar {} (dom/h1 "Amazing Counter Application")))
+        (div {:bp "container margin"}
+             (dom/div {:bp "grid 4 margin-bottom"}
+                      (map counter/ui-counter counters))
+             (u/js-comp
+               Button #js {:onClick #(prim/transact! this `[(add-counter {:tempid ~(prim/tempid)})])
+                           :color   "primary"
+                           :variant "contained"}
+               ["Add Counter"]))))))
