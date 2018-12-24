@@ -24,12 +24,17 @@
     (swap! state update-in [:counters id :counter/value] inc)
     nil))
 
+(defn ->monoid [f identity]
+  (fn monoid
+    ([] identity)
+    ([& args] (apply f args))))
+
 (fulcro.server/defmutation fulcro-test.ui.root/add-counter [{:keys [tempid]}]
   (action [env]
     (let [id (->> @state
                   :counters
                   keys
-                  (apply max)
+                  (apply (->monoid max 0))
                   inc)]
       (swap! state assoc-in [:counters id] {:db/id         id
                                             :counter/value 1})
