@@ -1,1 +1,1 @@
-web: npm i && lein uberjar && java $JVM_OPTS -Dconfig=config/prod.edn -jar target/fulcro-test.jar
+web: java $JVM_OPTS -Dconfig=config/prod.edn -jar target/fulcro-test.jar
