@@ -1,7 +1,7 @@
-{:http-kit      {:port 8080}
+{:http-kit      {:port :env/PORT}
 
  ;; Legal Origins for API request.
- :legal-origins #{"product.domain" "localhost"}
+ :legal-origins #{"product.domain" "localhost" :env/HOST}
 
  ;; You probably want these set to true in real production:
  :ring.middleware/defaults-config

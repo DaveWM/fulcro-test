@@ -42,5 +42,5 @@
 
 (fulcro.server/defmutation fulcro-test.ui.root/remove-counter [{:keys [id]}]
   (action [env]
-    (swap! state update :counters dissoc #spy/p id)
+    (swap! state update :counters dissoc id)
     nil))

@@ -3,9 +3,9 @@
   :license {:name "MIT" :url "https://opensource.org/licenses/MIT"}
   :min-lein-version "2.7.0"
 
-  :dependencies [[org.clojure/clojure "1.10.0"]
+  :dependencies [[org.clojure/clojure "1.9.0"]
                  [thheller/shadow-cljs "2.7.3"]
-                 [fulcrologic/fulcro "2.6.15"]
+                 [fulcrologic/fulcro "2.6.18"]
                  [com.wsscode/pathom "2.2.0-RC3"]
                  [ring/ring-defaults "0.3.2"]
                  [org.clojure/core.async "0.4.474"]

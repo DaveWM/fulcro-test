@@ -7,7 +7,10 @@
                        :modules    {:main {:entries [fulcro-test.client]}}
 
                        :devtools   {:after-load fulcro-test.client/start
-                                    :preloads   [fulcro.inspect.preload fulcro-test.development-preload]}}
+                                    :preloads   [fulcro.inspect.preload fulcro-test.development-preload]}
+
+                       :release {:compiler-options {:optimizations :advanced
+                                                    :infer-externs :auto}}}
 
           :test       {:target           :browser-test
                        :test-dir         "resources/public/js/test"
