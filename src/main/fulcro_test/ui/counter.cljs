@@ -9,11 +9,16 @@
   {:query [:db/id :counter/value]
    :ident [:counters/by-id :db/id]}
   (dom/div
-    (dom/h3 "Counter " id)
+    (dom/h3 "Counter " (if (prim/tempid? id)
+                         "..."
+                         id))
     (dom/p (str "value is: " value))
     (dom/button #js {:onClick #(prim/transact! this
                                                `[(fulcro-test.ui.root/increment {:id ~id})])}
-                "Clicky")))
+                "Increment")
+    (dom/button #js {:onClick #(prim/transact! this
+                                               `[(fulcro-test.ui.root/remove-counter {:id ~id}) :counters])}
+                "Delete")))
 
 
-(def ui-counter (prim/factory Counter {:key-fn :db/id}))
+(def ui-counter (prim/factory Counter {:key-fn #(:db/id %)}))

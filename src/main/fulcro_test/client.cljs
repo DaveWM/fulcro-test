@@ -21,7 +21,7 @@
 
 (defn ^:export init []
   (reset! app (fc/new-fulcro-client
-                ;; This ensures your client can talk to a CSRF-protected server.
+                ;; This ensures your client can talk to  CSRF-protected server.
                 ;; See middleware.clj to see how the token is embedded into the HTML
                 :networking {:remote (net/fulcro-http-remote
                                        {:url "/api"
